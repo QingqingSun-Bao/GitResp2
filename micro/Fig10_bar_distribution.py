@@ -26,6 +26,8 @@ def MF(g, N="氮素"):
     if N == "频率":
         if g == 2.0:
             g = "l"
+        # elif g == 0.0:
+        #     g = "nan"
         else:
             g = "h"
     return g
@@ -34,19 +36,19 @@ def MF(g, N="氮素"):
 def loop_chain_nan(year, gb, D, N="氮素"):
     if year == 2008:
         for g_ in gb:
-            print(MF(g_[0], N))
             g = MF(g_[0], N)
+            print("g", g)
             D["loop"][g], D["nan"][g], D["chain"][g] = 0, 0, 0
             for item in g_[1][3]:
-                if item == 0:
+                if item == 0:  # 链
                     D["chain"][g] += 1
                 elif item == -0.15:
                     D["nan"][g] += 1
-                else:
+                else:  # 环
                     D["loop"][g] += 1
     else:
         for g_ in gb:
-            g= MF(g_[0], N)
+            g = MF(g_[0], N)
             for item in g_[1][3]:
                 if item == 0:
                     D["chain"][g] += 1
@@ -72,30 +74,27 @@ def main():
         D = loop_chain_nan(year, gm, D, "刈割")
         gf = df_cir.groupby("频率")
         D = loop_chain_nan(year, gf, D, "频率")
-
-    print(D)
     net_loop = []
     net_chain = []
     net_nan = []
     '''氮素'''
     for key in D["loop"].keys():
         sum_ = D["loop"][key] + D["chain"][key] + D["nan"][key]
-        print(sum_)
         net_loop.append(D["loop"][key] / sum_)
         net_chain.append(D["chain"][key] / sum_)
         net_nan.append(D["nan"][key] / sum_)
-    print("非竞争", net_nan, "链", net_chain, "环", net_loop)
+    print("非竞争", len(net_nan), "链", len(net_chain), "环", len(net_loop))
     labels = ['N=0', 'N=1', 'N=2', 'N=3', 'N=5', 'N=10', 'N=15', 'N=20', 'N=50']
     width = 0.5  # the width of the bars: can also be len(x) sequence
 
     net = (np.array(net_loop) + np.array(net_chain)).tolist()
-    print("竞争主导", net)
+    print("竞争主导", len(net))
     plt.xticks(fontsize=15)
     plt.yticks(fontsize=15)
-    ax1=plt.subplot(212)
-    ax1.bar(labels, net_loop[:9], width, label='Loop',color="darkcyan")
-    ax1.bar(labels, net_chain[:9], width, bottom=net_loop[:9], label='Chain',color="turquoise")
-    ax1.bar(labels, net_nan[:9], width, bottom=net[:9], label='E-D',color="yellow")
+    ax1 = plt.subplot(212)
+    ax1.bar(labels, net_loop[:9], width, label='ICN', color="darkcyan")
+    ax1.bar(labels, net_chain[:9], width, bottom=net_loop[:9], label='TCN', color="turquoise")
+    ax1.bar(labels, net_nan[:9], width, bottom=net[:9], label='SCS', color="yellow")
     ax1.set_ylabel('Ratio', fontdict={"size": 20})
     ax1.set_xlabel('N addition rater'"$(gN m^{-2}year^{-1})$", fontdict={"size": 15})
 
@@ -103,29 +102,21 @@ def main():
     '''刈割'''
     label_2 = ['No-M', 'M']
     ax2 = plt.subplot(221)
-    ax2.bar(label_2, net_loop[9:11], width2, label='Loop', color="darkcyan")
-    ax2.bar(label_2, net_chain[9:11], width2, bottom=net_loop[9:11], label='Chain', color="turquoise")
-    ax2.bar(label_2, net_nan[9:11], width2, bottom=net[9:11], label='E-D', color="yellow")
+    ax2.bar(label_2, net_loop[9:11], width2, label='ICN', color="darkcyan")
+    ax2.bar(label_2, net_chain[9:11], width2, bottom=net_loop[9:11], label='TCN', color="turquoise")
+    ax2.bar(label_2, net_nan[9:11], width2, bottom=net[9:11], label='SCS', color="yellow")
     ax2.set_ylabel('Ratio', fontdict={"size": 20})
     ax2.set_xlabel('Mowing', fontdict={"size": 15})
 
-
-
-
-
-
-
     '''频率'''
-    label_3 = ['Low', 'High']
-    ax3 = plt.subplot(222)
-    ax3.bar(label_3, net_loop[11:13],  width2, label='Loop', color="darkcyan")
-    ax3.bar(label_3, net_chain[11:13],  width2, bottom=net_loop[11:13], label='Chain', color="turquoise")
-    ax3.bar(label_3, net_nan[11:13],  width2, bottom=net[11:13], label='E-D', color="yellow")
-    ax3.set_ylabel('Ratio', fontdict={"size": 20})
+    label_3 = ['Low(Twice)', 'High(Monthly)']
+    ax3 = plt.subplot(222)  # 222
+    ax3.bar(label_3, net_loop[11:13], width2, label='ICN', color="darkcyan")
+    ax3.bar(label_3, net_chain[11:13], width2, bottom=net_loop[11:13], label='TCN', color="turquoise")
+    ax3.bar(label_3, net_nan[11:13], width2, bottom=net[11:13], label='SCS', color="yellow")  # [11:13]
+    ax3.set_ylabel('Ratio', fontdict={"size": 15})
     ax3.set_xlabel('Frequency', fontdict={"size": 15})
     ax3.legend(ncol=1, bbox_to_anchor=(1.2, 1), fontsize=13)
-
-
 
     plt.show()
 

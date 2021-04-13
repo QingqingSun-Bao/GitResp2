@@ -1,5 +1,4 @@
 import pandas as pd
-import pymysql
 from sqlalchemy import create_engine
 import numpy as np
 
@@ -26,7 +25,6 @@ engine = create_engine('mysql+pymysql://root:Sun!@#123@106.75.247.108:3306/nchen
 # # print(df_bio)
 # df_bio.to_excel('C:/Users/97899/Desktop/N/Biomass/biomass.xls',sheet_name="bio_site")
 
-
 def Loaddic(path):
     fr = open(path, encoding='UTF-8')
     # 'unicode_escape'
@@ -37,20 +35,20 @@ def Loaddic(path):
 
 """各物种组配下的生物量"""
 df_bio = pd.read_excel('C:/Users/97899/Desktop/N/Biomass/biomass.xls', sheet_name="bio_site")
-Zuhe_bio = Loaddic("C:/Users/97899/Desktop/N/Zuhe/Zuhe_site.txt")
+Zuhe_bio = Loaddic("C:/Users/97899/Desktop/N/Zuhe/Zuhe_plot20.txt")
 df_bio.set_index(["site"], inplace=True)
-print(df_bio)
 ex_bio = {}
-ind = np.linspace(2009, 2019, 11).tolist()
-for item in ind:
-    ex_bio[item] = []
-    for jtem in Zuhe_bio[item]:
-        if jtem != -0.15:
+ind = np.linspace(2008, 2020, 13).tolist()
+for year in ind:
+    ex_bio[year] = []
+    print(Zuhe_bio[year])
+    for key in Zuhe_bio[year].keys():
+        if Zuhe_bio[year][key] != -0.15:
             sum = 0
-            for i in jtem:
-                sum = sum + df_bio.loc[int(i), item]
-            ex_bio[item].append(sum / len(jtem))
+            for i in Zuhe_bio[year][key]:
+                sum = sum + df_bio.loc[float(i), year]
+            ex_bio[year].append(sum / len(Zuhe_bio[year][key]))
         else:
-            ex_bio[item].append(-0.15)
+            ex_bio[year].append(-0.15)
 
-pd.DataFrame(ex_bio).to_excel('C:/Users/97899/Desktop/N/Biomass/bio_ex.xls')
+pd.DataFrame(ex_bio).to_excel('C:/Users/97899/Desktop/N/Biomass/bio_ex21.xls')

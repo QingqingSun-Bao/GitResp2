@@ -67,7 +67,7 @@ def sta_sys_three(sys_lst):
                 if len(item) == 3:
                     th_.append(item)
             else:
-                if len(item) == 3:
+                if len(item)== 3:
                     th_.append(item)
                 D[len(item)] = 1
     return D
@@ -97,13 +97,13 @@ def main():
     path = 'C:/Users/97899/Desktop/N/N_year/'
     # 各物种环的数量
     write = pd.ExcelWriter("C:/Users/97899/Desktop/N/Network/circle21.xls")
-    for year in range(2018, 2019):
+    for year in range(2008, 2009):
         D = {}
         path1 = path + "N_" + str(year) + '/Assemb/' + str(year) + '-' + str(0) + '.txt'
         Specise_set = LoadDict(path1)
         path3 = path + "N_" + str(year) + '/Spearman/' + str(year) + '-' + str(0) + '.txt'
         Spear_set = LoadDict(path3)
-        for ex in range(33, 34):
+        for ex in range(1, 2):
             D[ex] = {}
             ex = float(ex)
             path2 = path + "N_" + str(year) + '/CPmat/' + str(year) + '-' + str(ex) + '.txt'
@@ -115,6 +115,7 @@ def main():
             if np.all(C_mat == 0):
                 D[ex] = {3: -0.15}
             else:
+                print(C_mat)
                 node_list = Ass
                 # print(node_list)
                 plt.rcParams['axes.unicode_minus'] = False

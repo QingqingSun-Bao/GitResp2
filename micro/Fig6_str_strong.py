@@ -172,8 +172,9 @@ def main():
 
 
         har.append(N)
-    print(np.mat(har).T)
+    # print(np.mat(har).T)
     harvest = np.array(np.mat(har).T)
+    # print("harvest",harvest)
 
     year = list(ind)
     N = ["0", "1", "2", "3", "5", "10", "15", "20", "50"]
@@ -209,6 +210,23 @@ def main():
     # ax.set_title("Changes in network structure")
     fig.tight_layout()
     plt.show()
+    """计算均值"""
+    # mean_harvest=[]
+    # print(harvest)
+    # for item in harvest:
+    #     mean_harvest.append(np.mean(item))
+    #     print(np.mean(item))
+    # print("均值", mean_harvest)
+    """计算小于0.1的个数"""
+    # count=[]
+    # for item in harvest:
+    #     i=0
+    #     for j in item:
+    #         if j <=0.02:
+    #             i+=1
+    #     count.append(-i)
+    # print(count)
+
 
 
 main()

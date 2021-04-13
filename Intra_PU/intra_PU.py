@@ -44,7 +44,6 @@ def SelectSpec(path1, year, ex=float(1.0)):
             D[n] = []
             Selsect_set.append(Spec_lis)  # 保存所有的物种组合
             D[n].append(Spec_lis)
-
             n = n + 1
         else:
             break
@@ -166,18 +165,19 @@ def savedict(doc, year, datadict, ex):
 def main():
     start = time.process_time()
     '''参数调整'''
-    M = 100000# 循环次数
+    M = 1# 循环次数
     # 实验顺序
     for year in range(2009, 2010):  # 年份
         path1 = "C:/Users/ThinkCentre/Desktop/N/" + str(year) + ".xls"
         D_specise = {}
         D_Spvalue = {}
-        for ex in range(1, 39):
+        for ex in range(1, 2):
             ex = float(ex)
             D_Spvalue[ex] = []
             D_specise[ex] = []
             '''频繁项出现的物种组合以及样地号中的物种组合'''
             Select_set, Site_set,data_site= SelectSpec(path1, year, ex)
+            print(Select_set)
             # 函数返回所有物种组合，各plot的物种集合，plot的编号集合
             '''拟合各个频繁项集的C-P矩阵,存放在D字典中'''
             D_CP = {}
@@ -199,8 +199,8 @@ def main():
                     # print("跳出循环", key_Set,ex)
                     break
             '''保存文件'''
-            savedict('CPmat', year, D_CP, ex)
-        savedict('Assemb', year, D_specise, 0)
+        #     savedict('CPmat', year, D_CP, ex)
+        # savedict('Assemb', year, D_specise, 0)
         end = time.process_time()
         print('运行时间', end - start)
 

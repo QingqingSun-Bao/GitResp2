@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
 from scipy import stats
 
-path = "C:/Users/97899/Desktop/N/Single/huang/hu_bio_rem.xls"
-df_huang_nested = pd.read_excel(path, sheet_name="hu_loop_biorem")
-df_huang_nonested = pd.read_excel(path, sheet_name="hu_chain_biorem")
+path = "C:/Users/97899/Desktop/N/Single/da/da_bio20_avg.xls"
+df_huang_nested = pd.read_excel(path, sheet_name="da_nested")
+df_huang_nonested = pd.read_excel(path, sheet_name="da_no_nested")
 df_huang_nested.drop([0, 19], inplace=True)
 df_huang_nonested.drop([0, 19], inplace=True)
 Ind = list(np.linspace(2008, 2020, 13))
@@ -42,13 +42,13 @@ for key in bio_hu.keys():
     plt.plot(x_new, y_smooth, label=("%s" % key))
 plt.title("Stipa grandis")
 # 黄囊苔草Carex korshinskyi，糙隐子草Cleistogenes squarrosa，羊草Leymus chinensis,大针茅Stipa grandis P.A. Smirn.
-plt.legend(loc='upper right', bbox_to_anchor=(0.2, 1), ncol=1, fontsize=7)
+# plt.legend(loc='upper right', bbox_to_anchor=(0.2, 1), ncol=1, fontsize=7)
 # plt.axvline(x=2015, ls="-", c="green")
-# plt.text(2010, 0.3, "tau=%.3f**" % tau1, fontdict={"size": 9})
-# plt.text(2020, 0.3, "tau=%.3f" % tau2, fontdict={"size": 9})
-plt.text(2016, 30, "tau=%.3f***" % tau, fontdict={"size": 13})
-plt.xlabel("Time")
-plt.ylabel("Weight per plant(g)")
+# plt.text(2010, 20, "tau=%.3f**" % tau1, fontdict={"size": 9})
+# plt.text(2017, 20, "tau=%.3f" % tau2, fontdict={"size": 9})
+plt.text(2016, 120, "tau=%.3f***" % tau, fontdict={"size": 13})
+plt.xlabel("Year",fontdict={"size": 20})
+plt.ylabel("Biomass per plant(g)",fontdict={"size": 20})
 # 羊草,2016,500,"tau=%.3f***"%tau
 # 黄囊苔草，2016,100,"tau=%.3f"%tau
 # 糙隐子草，2016,50,"tau=%.3f**"%tau

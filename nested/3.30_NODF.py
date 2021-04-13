@@ -65,10 +65,8 @@ def nested(C_, d_1, d_2):
     n = np.shape(C_)[0]
     sum_1 = 0
     sum_2 = 0
-    # print(d_1,d_2)
     for i in range(n):
         for j in range(n):
-            # 两个循环完成i,j的行数
             m1 = 0
             m2 = 0
             for l in range(n):
@@ -113,32 +111,32 @@ if __name__ == "__main__":
         N_ = NPDF(C_simulate)
         nest.append(N_)
         """产生1000个null矩阵,算Z分数"""
-        sim = []
-        for item in range(1):
-            # print("第"+str(item)+"次",C_or)
-            C_origin = C_or.copy()  # 防止修改原地址的数值
-            # 模拟产生的0-1矩阵
-            C_simulate = null_mode(C_origin)
-            sim.append(NPDF(C_simulate))
-        # print(sim)
-        # print(np.mean(sim))
-        # print(np.std(sim))
-        # print(N_)
-        Z=((N_ - np.mean(sim)) / np.std(sim))
-        # print("Z", Z)
-        nest_Z.append(nest_Z)
-        # plt.hist(sim, 30, density=1)
-        # plt.xlabel("NODF")
-        # # sns.distplot(sim,bins=30,hist=True,
-        # #              kde=True,kde_kws = {'color':'red', 'linestyle':'--'})
-        # plt.show()
-        # # if year==2008 or ex==10:
-        # #     break
+        # sim = []
+        # for item in range(1):
+        #     # print("第"+str(item)+"次",C_or)
+        #     C_origin = C_or.copy()  # 防止修改原地址的数值
+        #     # 模拟产生的0-1矩阵
+        #     C_simulate = null_mode(C_origin)
+        #     sim.append(NPDF(C_simulate))
+        # # print(sim)
+        # # print(np.mean(sim))
+        # # print(np.std(sim))
+        # # print(N_)
+        # Z=((N_ - np.mean(sim)) / np.std(sim))
+        # # print("Z", Z)
+        # nest_Z.append(nest_Z)
+        # # plt.hist(sim, 30, density=1)
+        # # plt.xlabel("NODF")
+        # # # sns.distplot(sim,bins=30,hist=True,
+        # # #              kde=True,kde_kws = {'color':'red', 'linestyle':'--'})
+        # # plt.show()
+        # # # if year==2008 or ex==10:
+        # # #     break
 
     print(nest)
     df_all_loop["NODF"]=nest
     # df_all_loop["Z_NODF"] = nest_Z
-    # plt.hist(nest,30,normed=1)
-    # plt.xlabel("NODF")
-    # plt.show()
-    df_all_loop.to_excel(path+"Network/loop_NODF.xls")
+    plt.hist(nest)
+    plt.xlabel("NODF")
+    plt.show()
+    # df_all_loop.to_excel(path+"Network/loop_NODF.xls")

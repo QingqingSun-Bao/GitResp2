@@ -126,7 +126,7 @@ def main():
         Specise_set = LoadDict(path1)
         path3 = path + "N_" + str(year) + '/Spearman/' + str(year) + '-' + str(0) + '.txt'
         Spear_set = LoadDict(path3)
-        for ex in range(10, 11):
+        for ex in range(1, 2):#10
             D[ex] = {}
             ex = float(ex)
             path2 = path + "N_" + str(year) + '/CPmat/' + str(year) + '-' + str(ex) + '.txt'
@@ -154,7 +154,7 @@ def main():
                 G.add_edges_from(edge_list)  # 添加边,起点为x，终点为y
                 cyc_sys = list(nx.simple_cycles(G))
                 # print(cyc_sys)
-                node_color=["lawngreen"]
+                node_color=["turquoise"]
 
                 '''显示图形'''
                 # 结点分配不同的颜色
@@ -185,14 +185,14 @@ def main():
                     ,('Achnatherum\nsibiricum','Carex\nkorshinskyi'),('Carex\nkorshinskyi', 'Cleistogenes\nsquarrosa')]
                 # 羽茅Achnatherum sibiricum，大针茅Stipa grandis，糙隐子草Cleistogenes squarrosa，
                 # 冰草Agropyron cristatum，洽草Koeleria cristata，黄囊苔草Carex korshinskyi
-                nx.draw(G, pos,node_color=node_color,
-                                edge_color='red', with_labels=True, edgelist=edge_chain,width=3,
-                                font_size=10, node_size=3000)
+                # nx.draw(G, pos,node_color=node_color,
+                #                 edge_color='red', with_labels=True, edgelist=edge_chain,width=1.5,
+                #                 font_size=10, node_size=3000)
                 # node_color=["r", "yellow", "violet","orange","cornflowerblue", "lawngreen"]
                 print(edge_chain)
                 edge_chain=set(edge_list)-set(edge_chain)-set([('Cleistogenes\nsquarrosa','Carex\nkorshinskyi')])
                 nx.draw(G, pos,node_color=node_color,
-                                edge_color='black', with_labels=True, edgelist=edge_chain,
+                                edge_color='darkcyan', with_labels=True, edgelist=edge_chain,width=0.7,
                                 font_size=10, node_size=3000)
     plt.show()
 

@@ -16,8 +16,8 @@ def ex_deal(df_Int):
                 df_Int.loc[item, '氮素'] = df_ex.iloc[jtem, 2]
                 df_Int.loc[item, '频率'] = df_ex.iloc[jtem, 3]
                 df_Int.loc[item, '刈割'] = df_ex.iloc[jtem, 4]
-    df_Int.drop([0, 19], inplace=True)
-    df_Int.drop([2008.0], axis=1, inplace=True)
+    # df_Int.drop([0, 19], inplace=True)
+    # df_Int.drop([2008.0], axis=1, inplace=True)
     return df_Int
 
 if __name__=='__main__':

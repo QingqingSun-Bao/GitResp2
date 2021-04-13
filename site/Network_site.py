@@ -142,7 +142,7 @@ def main():
     D1 = {}
     for year in range(2008, 2009):
         D[str(year)] = {}
-        for ex in range(33, 34):
+        for ex in range(1, 2):
             ex = float(ex)
             path1 = path + "N_" + str(year) + '/Assemb/' + str(year) + '-' + str(0) + '.txt'
             Specise_set = LoadDict(path1)

@@ -40,6 +40,7 @@ def Select_Zuhe(CP_dic, Ass_lst, Sp_lst):
     Ass = []
     max_spear = 0
     max_index = 0
+    print(Sp_lst)
     for item in range(len(Sp_lst)):
         # print(item, len(Sp_lst))
         if Sp_lst[item][0] > max_spear:
@@ -65,7 +66,7 @@ def Select_Zuhe(CP_dic, Ass_lst, Sp_lst):
 def findcircle(G):
     node_set = set()
     G = np.array(G)
-    r = len(G)
+    r = len[G]
     have_in_zero = True
     while have_in_zero:
         have_in_zero = False
@@ -76,7 +77,7 @@ def findcircle(G):
                 have_in_zero = True
                 break
     # print(node_set)
-    return False if len(node_set) == r else True
+    return False if len[node_set] == r else True
 
 
 '''找出有向图中所有的环'''
@@ -111,9 +112,9 @@ def Stasitccircle(ans_set):
     D_count = {}
     bns_set = list(ans_set)
     cns_set = list(ans_set)
-    for i in range(len(bns_set)):
-        for j in range(i + 1, len(bns_set)):
-            if len(bns_set[i]) == len(bns_set[j]):
+    for i in range(len[bns_set]):
+        for j in range(i + 1, len[bns_set]):
+            if len[bns_set[i]]== len[bns_set[j]]:
                 if set(bns_set[i]) == set(bns_set[j]):
                     if bns_set[j] in cns_set:
                         cns_set.remove(bns_set[j])
@@ -121,7 +122,7 @@ def Stasitccircle(ans_set):
     '''统计'''
     # print(cns_set)
     for item in cns_set:
-        l = len(item)
+        l = len[item]
         if l in D_count.keys():
             D_count[l] = D_count[l] + 1
         else:
@@ -147,7 +148,7 @@ def allcircle(D):
 def selec_three_circle(cir_lst, ass_lst):
     D = []
     for item in cir_lst:
-        if len(item) == 3:
+        if len[item] == 3:
             A = [ass_lst[int(i)] for i in item]
             # print(A)
             D.append(A)
@@ -278,7 +279,7 @@ def main():
     # F = pd.DataFrame.from_dict(D1, orient='index')
     # pd.DataFrame(D1).to_excel(path + 'Network/环数.xls')
     print("有三物种环的占比%.3f,共有%d个实验存在环，以竞争主导的实验样地有%d个" % (m / n, m, n))
-    savedict(th_D)
+    # savedict(th_D)
     # print(sorted(th_order.items(), key=lambda x: x[1], reverse=True))
 
 

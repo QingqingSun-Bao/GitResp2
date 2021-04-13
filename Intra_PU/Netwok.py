@@ -138,51 +138,58 @@ def get_edge(C_mat, node):
 
 
 def main():
-    path = 'C:/Users/97899/Desktop/N/'
+    path = 'C:/Users/97899/Desktop/locust/'
     D = {}
     D1 = {}
-    for year in range(2008, 2009):
+    for year in range(2012, 2014):
         D[str(year)] = {}
-        for ex in range(1, 39):
-            ex = float(ex)
-            path1 = path + "N_" + str(year) + '/Assemb/' + str(year) + '-' + str(0) + '.txt'
-            Specise_set = LoadDict(path1)
-            D[str(year)][ex] = {}
-            path2 = path + "N_" + str(year) + '/CPmat/' + str(year) + '-' + str(ex) + '.txt'
+        path1 = path + "LX_" + str(year) + '/Assemb/' + str(year) + '-' + str(0) + '.txt'
+        Specise_set = LoadDict(path1)
+        for ex in Specise_set.keys():
+            print("第几个实验",ex)
+            max_spear=0
+            max_inx=0
+            indx=0
+            for item in Specise_set[ex]:
+                print(item)
+                if max_spear < item[1]:
+                    max_spear = item[1]
+                    max_inx = indx
+                indx += 1
+            print("最大的矩阵",max_inx)
+            path2 = path + "LX_" + str(year) + '/CPmat/' + str(year) + '-' + str(ex) + '.txt'
             D_mat = LoadDict(path2)
-            for item in range(len(Specise_set[str(ex)])):
-                # print(D_mat[item])
-                C_mat, G_mat, Tra_D = LoadDataSet(D_mat[item])
-                print(C_mat)
-                # C矩阵，有向图矩阵
-                '''判断是否有环'''
-                # have_circle = findcircle(G_mat)
-                # print(have_circle)
-                '''寻找有向图中的环'''
-                dfs(Tra_D, [], 0)
-                '''统计网络中的环数'''
-                D[str(year)][ex][item] = Stasitccircle(ans)  # 返回的两个值以元组的形式存储
-                ans.clear()
-                # 清空集合
-                print(str(year) + '年', '第' + str(ex) + '个实验', '第' + str(item + 1) + '个组合', D[str(year)][ex][item])
-                node_list = Specise_set[str(ex)][item]
-                print(node_list)
-                plt.rcParams['axes.unicode_minus'] = False
-                plt.rcParams['font.sans-serif'] = ['SimHei']
-                G = nx.DiGraph()
-                G.add_nodes_from(node_list)  # 添加点a
-                edge_list = get_edge(C_mat, node_list)
-                G.add_edges_from(edge_list)  # 添加边,起点为x，终点为y
-                '''显示图形'''
-                nx.draw(G, pos=nx.circular_layout(G), node_color='lightgreen', edge_color='black', with_labels=True,
-                        font_size=10, node_size=3000)
-                # plt.title('第'+str(ex)+'个实验')
-                plt.show()
+            C_mat, G_mat, Tra_D = LoadDataSet(D_mat[max_inx])
+            # print(C_mat)
+            # C矩阵，有向图矩阵
+            '''判断是否有环'''
+            # have_circle = findcircle(G_mat)
+            # print(have_circle)
+            '''寻找有向图中的环'''
+            dfs(Tra_D, [], 0)
+            '''统计网络中的环数'''
+            # D[str(year)][ex][item] = Stasitccircle(ans)  # 返回的两个值以元组的形式存储
+            # ans.clear()
+            # 清空集合
+            print(str(year) + '年', '第' + str(ex) + '个实验',
+                  Specise_set[ex][max_inx])
+            node_list = Specise_set[ex][max_inx][0]
+            plt.rcParams['axes.unicode_minus'] = False
+            plt.rcParams['font.sans-serif'] = ['SimHei']
+            G = nx.DiGraph()
+            G.add_nodes_from(node_list)  # 添加点a
+            edge_list = get_edge(C_mat, node_list)
+            G.add_edges_from(edge_list)  # 添加边,起点为x，终点为y
+            '''显示图形'''
+            nx.draw(G, pos=nx.circular_layout(G), node_color='lightgreen', edge_color='black', with_labels=True,
+                    font_size=10, node_size=3000)
+            # plt.title('第'+str(ex)+'个实验')
+            plt.show()
             # 实验汇总去重
-            Count = allcircle(D[str(year)][ex])
-            D1[ex] = Count[0]
-        F = pd.DataFrame.from_dict(D1, orient='index')
-        F.to_excel(path + '环数.xls')
+        #     Count = allcircle(D[str(year)][ex])
+        #     D1[ex] = Count[0]
+        # F = pd.DataFrame.from_dict(D1, orient='index')
+        # F.to_excel(path + '环数.xls')
 
     # print(D)
 

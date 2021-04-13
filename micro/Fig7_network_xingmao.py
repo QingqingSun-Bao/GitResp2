@@ -80,6 +80,8 @@ def sta_sys_three(sys_lst):
 def LoadDict(path):
     fr = open(path, encoding='utf-8')
     dic = eval(fr.read())  # 将str转化成dict
+    print(dic)
+    print(dic)
     fr.close()
     return dic
 
@@ -142,13 +144,13 @@ def main():
                 # ['灰绿藜'Chenopodium glaucum , '羽茅'Achnatherum sibiricum, '糙隐子草'leistogenes squarrosa,
                 # '星毛委陵菜'Potentilla acaulis, '冰草'Agropyron cristatum, '大针茅'Stipa grandis]
                 print("Ass",Ass)
-                # node_list = Ass=['Chenopodium\nglaucum','Achnatherum\nsibiricum','leistogenes\nsquarrosa',
-                #                  'Potentilla\nacaulis','Agropyron\ncristatum','Stipa\ngrandis']
-                node_list=['灰绿藜','羽茅','糙隐子草','星毛委陵菜','冰草','大针茅']
+                node_list = Ass=['Chenopodium\nglaucum','Achnatherum\nsibiricum','Cleistogenes\nsquarrosa',
+                                  'Potentilla\nacaulis','Agropyron\ncristatum','Stipa\ngrandis']
+                # node_list=['灰绿藜','羽茅','糙隐子草','星毛委陵菜','冰草','大针茅']
                 # print(node_list)
                 plt.rcParams['axes.unicode_minus'] = False
-                plt.rcParams['font.sans-serif'] = ['SimHei']
-                # Times New Roman
+                plt.rcParams['font.sans-serif'] = ['Times New Roman']
+                # Times New Roman,SimHei
                 G = nx.DiGraph()
                 G.add_nodes_from(node_list)  # 添加点a
                 edge_list = get_all_edge(C_mat, node_list)
@@ -183,16 +185,17 @@ def main():
                 #          font_size=10, node_size=3000)
                 edge_ring=[]
                 # node_color = ["limegreen", "r", "violet", "cyan", "orange", "yellow"]
-                node_color = ["lawngreen","lawngreen","lawngreen","orange","lawngreen","lawngreen"]
+                # node_color = ["lawngreen","lawngreen","lawngreen","orange","lawngreen","lawngreen"]
+                node_color=["turquoise"]
                 for item in cyc_sys:
                     if len(item)>=3:
                         print(item)
                         # if "Potentilla\nacaulis" in item:
-                        if "星毛委陵菜" in item:
+                        if "Potentilla\nacaulis" in item:
                             print(item)
                             edge_list1 = get_cyc_edge(C_mat,item,Ass)
                             nx.draw(G, pos,node_color=node_color,
-                                    edge_color='red', with_labels=True, edgelist=edge_list1,width=2,
+                                    edge_color='red', with_labels=True, edgelist=edge_list1,width=1.5,
                                     font_size=10, node_size=3000)
                             edge_ring.extend(edge_list1)
                         # if "Potentilla\nacaulis" not in item:
@@ -204,7 +207,7 @@ def main():
 
                 edge_chain=set(edge_list)-set(edge_ring)
                 nx.draw(G, pos,node_color=node_color,
-                                edge_color='black', with_labels=True, edgelist=edge_chain,
+                                edge_color='darkcyan', with_labels=True, edgelist=edge_chain,width=0.7,
                                 font_size=10, node_size=3000)
     plt.show()
 

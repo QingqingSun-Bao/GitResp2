@@ -116,40 +116,43 @@ def main():
     ring["bio"], ring["zhu"], ring["N"],  ring["M"], ring["F"],ring["N_"] = [], [], [], [], [],[]
     chain["bio"], chain["zhu"], chain["N"],  chain["M"], chain["F"],chain["N_"] = [], [], [], [], [],[]
     for year in range(2008, 2021):
-        ring_chain = pd.read_excel(path + "Network/circle20.xls", sheet_name=str(year))
+        ring_chain = pd.read_excel(path + "Network/circle21.xls", sheet_name=str(year))
         ring_chain.set_index(['Unnamed: 0'], inplace=True)
         bio_root = pd.read_sql(str(year), con=engine)
         print(year)
         for ex in range(1, 39):
-            if ring_chain.loc[ex, 3] >= 0:
-                if ring_chain.loc[ex, 3] == 0:
-                    bio, zhu = all_bio_zhu(bio_root, ex, zuhe_plot[year][ex], zuhe[year][ex])
-                    chain["bio"].append(bio)
-                    chain["zhu"].append(zhu)
-                    chain["N"].append(deal_ex.loc[ex, "氮素"])
-                    chain["M"].append(deal_ex.loc[ex, "刈割"])
-                    chain["F"].append(deal_ex.loc[ex, "频率"])
-                    if deal_ex.loc[ex, "氮素"]>=15:
-                        chain["N_"].append(1)
+            if ex==1 or ex==20:
+                continue
+            else:
+                if ring_chain.loc[ex, 3] >= 0:
+                    if ring_chain.loc[ex, 3] == 0:
+                        bio, zhu = all_bio_zhu(bio_root, ex, zuhe_plot[year][ex], zuhe[year][ex])
+                        chain["bio"].append(bio)
+                        chain["zhu"].append(zhu)
+                        chain["N"].append(deal_ex.loc[ex, "氮素"])
+                        chain["M"].append(deal_ex.loc[ex, "刈割"])
+                        chain["F"].append(deal_ex.loc[ex, "频率"])
+                        if deal_ex.loc[ex, "氮素"]>=15:
+                            chain["N_"].append(1)
+                        else:
+                            chain["N_"].append(0)
                     else:
-                        chain["N_"].append(0)
-                else:
-                    bio, zhu = all_bio_zhu(bio_root, ex, zuhe_plot[year][ex], zuhe[year][ex])
-                    ring["bio"].append(bio)
-                    ring["zhu"].append(zhu)
-                    ring["N"].append(deal_ex.loc[ex, "氮素"])
-                    ring["M"].append(deal_ex.loc[ex, "刈割"])
-                    ring["F"].append(deal_ex.loc[ex, "频率"])
-                    if deal_ex.loc[ex, "氮素"]>=15:
-                        ring["N_"].append(1)
-                    else:
-                        ring["N_"].append(0)
+                        bio, zhu = all_bio_zhu(bio_root, ex, zuhe_plot[year][ex], zuhe[year][ex])
+                        ring["bio"].append(bio)
+                        ring["zhu"].append(zhu)
+                        ring["N"].append(deal_ex.loc[ex, "氮素"])
+                        ring["M"].append(deal_ex.loc[ex, "刈割"])
+                        ring["F"].append(deal_ex.loc[ex, "频率"])
+                        if deal_ex.loc[ex, "氮素"]>=15:
+                            ring["N_"].append(1)
+                        else:
+                            ring["N_"].append(0)
 
     ring_df=pd.DataFrame(ring)
     chain_df=pd.DataFrame(chain)
     # ring_df.to_excel(path +"tuoyuan.xls")
-    chain_df.to_excel(path+"tuoyuan_chain.xls")
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10,6))
+    # chain_df.to_excel(path+"tuoyuan_chain.xls")
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10,6))
 
     extre_x = np.max(ring["bio"]) - np.min(ring["bio"])
     x1 = np.array([(i - np.min(ring["bio"])) / extre_x for i in ring["bio"]])
@@ -179,12 +182,18 @@ def main():
     color = ["black","red",   "gold",
             "sienna","lawngreen", "green",
              "teal", "blue", "fuchsia"]
-    gbc1 = ring_df.groupby("F")
+
+    """更改分类变量"""
+    groupby_variable="N_"
+    # N_,M,F
+    gbc1 = ring_df.groupby(groupby_variable)
     color1N=["green","fuchsia"]
-    colorF=["sienna", "blue","orange"]
+    colorF=[ "blue","orange"]
+    colorM=["black","red"]
+    color_index=color1N
 
     for index, g in enumerate(gbc1):
-           ax1.scatter(g[1].loc[:, "bio_std"], g[1].loc[:, "zhu_std"], marker="o", color=colorF[index], facecolor="none"
+           ax1.scatter(g[1].loc[:, "bio_std"], g[1].loc[:, "zhu_std"], marker="o", color=color_index[index], facecolor="none"
                     , s=50)
     # ax1.scatter(x1, y1, s=0.5)
 
@@ -196,21 +205,19 @@ def main():
     #                    label=r'$3\sigma$', edgecolor='blue', linestyle=':')
 
     ax1.scatter(mu0, mu1, c='blue', s=15)
-    ax1.text(0.8, 0.8, "R=0.116")
-    ax1.set_title('Loop plots')
-    ax1.set_xlabel("Average Biomass ")
-    ax1.set_ylabel("Number of Ramets")
+    ax1.text(0.8, 0.8, r"$r^{2}=0.101$")
+    # ax1.set_title('ICN')
+    # ax1.set_xlabel("Average Biomass ",fontsize=20)
+    ax1.set_ylabel("TCN",fontsize=17)
     # 画水平与垂直线
     ax1.axhline(y=0.5,ls="--",C="black")
     ax1.axvline(x=0.5, ls="--", C="black")
 
+    """更改分类变量"""
+    gbc2 = chain_df.groupby(groupby_variable)
 
-
-
-
-    gbc2 = chain_df.groupby("F")
     for index, g in enumerate(gbc2):
-            ax2.scatter(g[1].loc[:, "bio_std"], g[1].loc[:, "zhu_std"], marker="o", color=colorF[index],facecolor="none"
+            ax2.scatter(g[1].loc[:, "bio_std"], g[1].loc[:, "zhu_std"], marker="o", color=color_index[index],facecolor="none"
                         , s=60)
             print(g[0])
     # N1=["N<15","N>=15"]
@@ -226,10 +233,11 @@ def main():
 
     ax2.scatter(mu2, mu3, c='red', s=15)
 
-    ax2.text(0.7, 0.8, "R=0.482***")
-    ax2.set_title('Chained Plots')
-    ax2.set_xlabel("Average Biomass")
-    ax2.set_ylabel("Number of Ramets")
+    ax2.text(0.7, 0.8, r"$r^{2}=0.494***$")
+    # ax2.set_title('TCN')
+    ax2.set_xlabel("Average Biomass",fontsize=20)
+    ax2.set_ylabel("ICN",fontsize=17)
+    # ax2.set_ylabel("Numnber of RP",fontsize=20)
     # 画水平与垂直线
     ax2.axhline(y=0.5, ls="--", C="black")
     ax2.axvline(x=0.5, ls="--", C="black")
@@ -237,6 +245,7 @@ def main():
 
 
     plt.show()
+
 
 
 

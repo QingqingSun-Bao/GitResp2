@@ -32,7 +32,7 @@ def SelectSpec(engine, year, ex=str(1.0)):
     df = pd.DataFrame(te_array, columns=te.columns_)
     # 用apriori找出频繁项集
     freq = apriori(df, min_support=0.5, use_colnames=True)
-    Max_len = 0
+    Max_len = 3
     n = 0
     for item in reversed(freq['itemsets']):
         if len(item) >= Max_len:

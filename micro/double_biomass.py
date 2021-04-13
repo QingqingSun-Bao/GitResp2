@@ -1,14 +1,8 @@
 import pandas as pd
 from sqlalchemy import create_engine
+from Load_Save import LoadDict
 
 '''double biomass'''
-
-
-def LoadDict(path):
-    fr = open(path, encoding='utf-8')
-    dic = eval(fr.read())  # 将str转化成dict
-    fr.close()
-    return dic
 
 
 def spe_bio(data, ex, spec, zuhe):

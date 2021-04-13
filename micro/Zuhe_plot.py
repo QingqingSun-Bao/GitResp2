@@ -1,26 +1,8 @@
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
-
+from Load_Save import LoadDict,Savedict
 """找出所有三物种组合所在的ex"""
-'''导入矩阵字典'''
-
-
-def LoadDict(path):
-    fr = open(path, encoding='utf-8')
-    dic = eval(fr.read())  # 将str转化成dict
-    fr.close()
-    return dic
-
-
-'''保存文件'''
-
-
-def savedict(datadict):
-    file = open("C:/Users/97899/Desktop/N/Zuhe/Zuhe_plot20.txt", "w",encoding='utf8')
-    file.write(str(datadict))
-    file.close()
-
 
 '''找到样地'''
 
@@ -44,12 +26,13 @@ def main():
     Zuhe=LoadDict(path+"Zuhe_20.txt")
     # 物种组合出现的样地
     stt_plot = {}
-    for year in range(2008, 2021):
+    for year in range(2008, 2009):
         stt_plot[year]={}
         df=pd.read_sql(str(year),con=engine)
         for ex in range(1, 39):
             stt_plot[year][ex]=zuhe_plot(Zuhe[year][ex],ex,df)
-    savedict(stt_plot)
+    path_s="C:/Users/97899/Desktop/N/Zuhe/Zuhe_plot20.txt"
+    Savedict(path_s,stt_plot)
     print(stt_plot)
 
 

@@ -167,7 +167,7 @@ def main():
                 continue
             else:
                 A.append(i)
-    print(A,len(A))
+    print(A,len[A])
     # 各物种环的数量
     D={}
     for year in range(2008, 2021):

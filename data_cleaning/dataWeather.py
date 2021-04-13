@@ -3,6 +3,8 @@ from sqlalchemy import create_engine
 import pymysql
 import numpy as np
 
+
+
 def temp(engine,monthset):
     D={}
     for item in range(2008, 2021):
@@ -61,14 +63,11 @@ def temp(engine,monthset):
 def fall(engine,monthset):
     D={}
     for item in range(2008,2021):
+        print(item)
         col = '人工监测日降水量/mm'
-        # if item in range(2008,2021):
-        #     col='人工监测日降水量/mm'
-        # else:
-        #     col = '日降水量/mm'
         df = pd.read_sql(str(item), con=engine)
-        # df_1 = df[df[col].notna()]
         df_1 = df.fillna(0)
+
         D[item] = []
         sum_1 = 0
         sum_0 = 0
@@ -77,8 +76,9 @@ def fall(engine,monthset):
         for j in monthset:
             df_2 = df_1[df_1['月'] == str(j)]
             n0=n0+df_2.shape[0]
-            # print(df_2)
+
             for i in df_2[col]:
+                # print(j,i)
                 if type(i)==str:
                     if len(i)==1:
                         i=0.0
@@ -86,6 +86,7 @@ def fall(engine,monthset):
                         float(i)
                 sum_0 = sum_0 + float(i)
         # 生长季降雨量的总和
+        print(sum_0)
         D[item].append('%.2f' % sum_0)
         # 生长季降雨量每天
         D[item].append('%.2f' % (float(sum_0)/n0))
@@ -105,7 +106,7 @@ def fall(engine,monthset):
         '''1-7月降水量'''
         sum_2=0
         n2=0
-        for j in range(1,2):
+        for j in range(5,7):
             df_3 = df_1[df_1['月'] == str(float(j))]
             n2=n2+np.shape(df_3)[0]
             for i in df_3[col]:
@@ -143,10 +144,11 @@ def main():
     D = fall(engine,monthset)
     rain=pd.DataFrame(D).T
     rain.columns=["season","avg_sea","all","avg_all","7","avg_7","9","avg_9"]
-    rain.to_excel(path + 'weather_rain_20.xls')
+    # 21为全的2020
+    rain.to_excel(path + 'weather_rain_21.xls')
     # 获取温度
-    D1 = temp(engine,monthset)
-    pd.DataFrame(D1).T.to_excel(path + 'weather_temp_20.xls')
-    "0-season,1-all,2-1~7"
+    # D1 = temp(engine,monthset)
+    # pd.DataFrame(D1).T.to_excel(path + 'weather_temp_21.xls')
+    # "0-season,1-all,2-1~7"
 
 main()

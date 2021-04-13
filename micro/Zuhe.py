@@ -1,13 +1,7 @@
 import pandas as pd
 import numpy as np
+from Load_Save import LoadDict
 
-
-# 导入组合
-def LoadDict(path):
-    fr = open(path, encoding='utf-8')
-    dic = eval(fr.read())  # 将str转化成dict
-    fr.close()
-    return dic
 
 
 # 计算物种出现的频率

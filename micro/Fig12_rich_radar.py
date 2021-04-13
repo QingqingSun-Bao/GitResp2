@@ -79,56 +79,45 @@ def main():
             D_N["loop"][year][g[0]] = mean_rich_loop
             D_N["chain"][year][g[0]] = mean_rich_chain
     df_loop, df_chain = pd.DataFrame(D_N["loop"]), pd.DataFrame(D_N["chain"])
-    print(df_loop, df_chain)
+    # print(df_loop, df_chain)
     '''画不同氮素下的雷达图'''
+    plt.rcParams['axes.unicode_minus'] = False
+    plt.rcParams['font.sans-serif'] = ['Times New Roman']
     lables = np.linspace(2008, 2020, 13).astype(int)
     nAttr = 13
-    N_label=df_loop.index
+    N_label = df_loop.index
     print(N_label)
     fig = plt.figure(facecolor="white")
     cmap = matplotlib.cm.get_cmap('Spectral')  # 可以选要提取的cmap，如'Spectral'
     cmap(0.1)  # 0-1
-    n,m=1,1
+    n, m = 1, 1
     for item in N_label:
-        rich=np.array(df_loop.loc[item,:])
-        angles = np.linspace(0, 2*np.pi, nAttr, endpoint=False)
-        rich= np.concatenate((rich, [rich[0]]))
+        rich = np.array(df_loop.loc[item, :])
+        angles = np.linspace(0, 2 * np.pi, nAttr, endpoint=False)
+        rich = np.concatenate((rich, [rich[0]]))
         angles = np.concatenate((angles, [angles[0]]))
         plt.subplot(121, polar=True)
-        plt.plot(angles,rich, 'o-',c=cmap(0.1*n),label=item) #, linewidth = 2
+        plt.plot(angles[:13], rich[:13], 'o-', c=cmap(0.1 * n), label=int(item))  # , linewidth = 2
         plt.thetagrids(angles * 180 / np.pi, lables)
         plt.grid(True)
-        n=n+1
-    plt.title("Loop",fontdict={"size":15})
+        n = n + 1
+    plt.title("ICN", fontdict={"size": 20})
     for item in N_label:
-        rich=np.array(df_chain.loc[item,:])
-        angles = np.linspace(0, 2*np.pi, nAttr, endpoint=False)
-        rich= np.concatenate((rich, [rich[0]]))
+        rich = np.array(df_chain.loc[item, :])
+        angles = np.linspace(0, 2 * np.pi, nAttr, endpoint=False)
+        rich = np.concatenate((rich, [rich[0]]))
         angles = np.concatenate((angles, [angles[0]]))
         plt.subplot(122, polar=True)
-        plt.plot(angles,rich, 'o-',c=cmap(0.1*m),label=item) #, linewidth = 2
+        plt.plot(angles[:13], rich[:13], "o-", c=cmap(0.1 * m), label=int(item))  # , linewidth = 2
         plt.thetagrids(angles * 180 / np.pi, lables)
         plt.grid(True)
-        m=m+1
-    plt.title("Chain",fontdict={"size":15})
-    plt.legend(ncol=1, bbox_to_anchor=(1.1, 0.7), fontsize=13)
+        print(int(item), rich[:13])
+        m = m + 1
+    plt.title("TCN", fontdict={"size": 20})
+    plt.legend(ncol=1, bbox_to_anchor=(1.2, 1.1), fontsize=10)
     plt.show()
+
 
 main()
 
-date = np.array([7, 5, 6, 9, 8, 7,0,0,0,0,0,0,0])
-# lables = np.array(['综合','KDA','发育','推进','生存','输出'])
-# nAttr = 6
-# date = np.array([7, 5, 6, 9, 8, 7])
-# angles = np.linspace(0, 2*np.pi, nAttr, endpoint=False)
-# date = np.concatenate((date, [date[0]]))
-# angles = np.concatenate((angles, [angles[0]]))
-# fig = plt.figure(facecolor="white")
-# plt.subplot(111, polar=True)
-# plt.plot(angles, date, 'bo-', color = 'g', linewidth = 2)
-# plt.fill(angles, date, facecolor = 'g', alpha = 0.25)
-# plt.thetagrids(angles*180/np.pi, lables)
-# plt.figtext(0.52, 0.95, 'DOTA能力值雷达图', ha='center')
-# plt.grid(True)
-# plt.savefig('dota_radar.JPG')
-# plt.show()
+
