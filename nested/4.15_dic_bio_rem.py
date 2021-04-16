@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 # @Time:2021/4/1521:03
 # @File:4.15_dic_bio_rem.py
-# -*- coding: utf-8 -*-
-# @Time:2021/4/1512:58
-# @File:4.15_charater_N.py
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine

@@ -208,7 +208,7 @@ def main():
     ax1.text(0.8, 0.8, r"$r^{2}=0.101$")
     # ax1.set_title('ICN')
     # ax1.set_xlabel("Average Biomass ",fontsize=20)
-    ax1.set_ylabel("TCN",fontsize=17)
+    ax1.set_ylabel("ICN",fontsize=17)
     # 画水平与垂直线
     ax1.axhline(y=0.5,ls="--",C="black")
     ax1.axvline(x=0.5, ls="--", C="black")
@@ -236,7 +236,7 @@ def main():
     ax2.text(0.7, 0.8, r"$r^{2}=0.494***$")
     # ax2.set_title('TCN')
     ax2.set_xlabel("Average Biomass",fontsize=20)
-    ax2.set_ylabel("ICN",fontsize=17)
+    ax2.set_ylabel("TCN",fontsize=17)
     # ax2.set_ylabel("Numnber of RP",fontsize=20)
     # 画水平与垂直线
     ax2.axhline(y=0.5, ls="--", C="black")
