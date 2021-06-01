@@ -33,17 +33,17 @@ def Loaddic(path):
     return dic
 
 
-"""各物种组配下的生物量"""
+"""各物种组配所在样地的平均生物量"""
 df_bio = pd.read_excel('C:/Users/97899/Desktop/N/Biomass/biomass.xls', sheet_name="bio_site")
 Zuhe_bio = Loaddic("C:/Users/97899/Desktop/N/Zuhe/Zuhe_plot20.txt")
 df_bio.set_index(["site"], inplace=True)
 ex_bio = {}
-ind = np.linspace(2008, 2020, 13).tolist()
-for year in ind:
+# ind = np.linspace(2017, 2020, 4).tolist()
+for year in [2017]:
     ex_bio[year] = []
     print(Zuhe_bio[year])
     for key in Zuhe_bio[year].keys():
-        if Zuhe_bio[year][key] != -0.15:
+        if Zuhe_bio[year][key][0][0] != -0.15:
             sum = 0
             for i in Zuhe_bio[year][key]:
                 sum = sum + df_bio.loc[float(i), year]
@@ -51,4 +51,4 @@ for year in ind:
         else:
             ex_bio[year].append(-0.15)
 
-pd.DataFrame(ex_bio).to_excel('C:/Users/97899/Desktop/N/Biomass/bio_ex21.xls')
+# pd.DataFrame(ex_bio).to_excel('C:/Users/97899/Desktop/N/Biomass/bio_ex21.xls')

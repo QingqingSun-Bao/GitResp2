@@ -36,13 +36,14 @@ def get_Euclidean(dic_chara):
     for key1 in data.keys():
         for key2 in data.keys():
             dist += (data[key1] - data[key2]) ** 2
-    return dist / 2
+    return np.sqrt(dist / 2)
 
 
 if __name__ == "__main__":
     path = "C:/Users/97899/Desktop/N/"
     df_NODF = pd.read_excel(path + "Network/loop_NODF.xls")
     dic_attr = LoadDict(path + "Attribute/bio_rem.txt")
+
     """单独获取自然年份的数据"""
     df_nature = df_NODF[df_NODF["year"] == 2008]
     print("nature", df_nature)
@@ -99,7 +100,8 @@ if __name__ == "__main__":
     print("y", y)
     m = 0.2
     x1 = [0, np.log10(1) + m, np.log10(2) + m, np.log10(3) + m, np.log10(5) + m, np.log10(10) + m,
-          np.log10(15) + m, np.log10(20) + m]
+           np.log10(15) + m, np.log10(20) + m]
+    # x1=[0,1,2,3,5,10,15,20]
     x2 = [[i, i ** 2] for i in x1]
     x = sm.add_constant(x2)
     model = sm.OLS(y, x)
@@ -109,11 +111,12 @@ if __name__ == "__main__":
     plt.plot(x1, y_fitted, "r")
     labels = x1
     err = bio_std[:-1]
-    plt.bar(labels, y, width=0.1, yerr=err)
+    plt.bar(labels, y, width=0.1,yerr=err)
     plt.ylabel("MFD in biomass", fontdict={"size": 15})
     plt.xlabel("N addition rate", fontdict={"size": 15})
     plt.xticks(x1, ["0", "1", "2", "3", "5", "10", "15", "20"])
-    plt.text(np.log10(10) + m, 50, r"$r^2=0.857**$")
+    plt.text(np.log10(10) + m, 7, r"$r^2=0.872**$")
+    plt.ylim(0,9)
     plt.show()
 
     plt.show()

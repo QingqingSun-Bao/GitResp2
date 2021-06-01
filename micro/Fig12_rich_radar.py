@@ -52,6 +52,7 @@ def main():
             if cir == 0:
                 D["chain"].append(df_rich.loc[index - 1, year])
     Nat = stats.mannwhitneyu(np.array(D["loop"]), np.array(D["chain"]), alternative='two-sided')
+
     '''每年的平均值'''
     N_loop.append(np.mean(D["loop"]))
     N_chain.append(np.mean(D["chain"]))
@@ -80,17 +81,20 @@ def main():
             D_N["chain"][year][g[0]] = mean_rich_chain
     df_loop, df_chain = pd.DataFrame(D_N["loop"]), pd.DataFrame(D_N["chain"])
     # print(df_loop, df_chain)
+    df_loop.to_excel(path+"Support/loop_rich.xls")
+    df_chain.to_excel(path + "Support/chain_rich.xls")
     '''画不同氮素下的雷达图'''
     plt.rcParams['axes.unicode_minus'] = False
     plt.rcParams['font.sans-serif'] = ['Times New Roman']
     lables = np.linspace(2008, 2020, 13).astype(int)
     nAttr = 13
     N_label = df_loop.index
-    print(N_label)
     fig = plt.figure(facecolor="white")
     cmap = matplotlib.cm.get_cmap('Spectral')  # 可以选要提取的cmap，如'Spectral'
     cmap(0.1)  # 0-1
     n, m = 1, 1
+    dic_loop={}
+    dic_chain={}
     for item in N_label:
         rich = np.array(df_loop.loc[item, :])
         angles = np.linspace(0, 2 * np.pi, nAttr, endpoint=False)
@@ -101,7 +105,9 @@ def main():
         plt.thetagrids(angles * 180 / np.pi, lables)
         plt.grid(True)
         n = n + 1
+        dic_loop[item]=rich[:13]
     plt.title("ICN", fontdict={"size": 20})
+
     for item in N_label:
         rich = np.array(df_chain.loc[item, :])
         angles = np.linspace(0, 2 * np.pi, nAttr, endpoint=False)
@@ -111,12 +117,21 @@ def main():
         plt.plot(angles[:13], rich[:13], "o-", c=cmap(0.1 * m), label=int(item))  # , linewidth = 2
         plt.thetagrids(angles * 180 / np.pi, lables)
         plt.grid(True)
+        dic_chain[item] = rich[:13]
         print(int(item), rich[:13])
+
         m = m + 1
     plt.title("TCN", fontdict={"size": 20})
     plt.legend(ncol=1, bbox_to_anchor=(1.2, 1.1), fontsize=10)
     plt.show()
 
+
+
+    # 考察多样性的显著性
+    for key in dic_loop.keys():
+        tau = stats.kendalltau(dic_loop[key], dic_chain[key])
+        # Nat = stats.mannwhitneyu(np.array(dic_loop[key]), np.array(dic_chain[key]), alternative='two-sided')
+        print(key,tau)
 
 main()
 

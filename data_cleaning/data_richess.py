@@ -98,7 +98,9 @@ for year in range(2008, 2021):
                     num_site.append(len(jtem[1]['物种']))
             site[year].append(site_num)
             # 计算丧失的物种数以及新植入的物种数
+            # 自然状态下的物种数量与处理后的物种的交集，就是一直存在的物种
             maintain = nat_seed[ex - 1] & A
+            # 丢失的物种：自然状态下，减去一直存在的物种
             lose.append(len(nat_seed[ex - 1]) - len(maintain))
             new.append(len(A) - len(maintain))
             avg_rich.append(np.mean(num_site))

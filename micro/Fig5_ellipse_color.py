@@ -121,9 +121,9 @@ def main():
         bio_root = pd.read_sql(str(year), con=engine)
         print(year)
         for ex in range(1, 39):
-            if ex==1 or ex==20:
-                continue
-            else:
+            # if ex==1 or ex==20:
+            #     continue
+            # else:
                 if ring_chain.loc[ex, 3] >= 0:
                     if ring_chain.loc[ex, 3] == 0:
                         bio, zhu = all_bio_zhu(bio_root, ex, zuhe_plot[year][ex], zuhe[year][ex])
@@ -184,13 +184,13 @@ def main():
              "teal", "blue", "fuchsia"]
 
     """更改分类变量"""
-    groupby_variable="N_"
+    groupby_variable="M"
     # N_,M,F
     gbc1 = ring_df.groupby(groupby_variable)
     color1N=["green","fuchsia"]
-    colorF=[ "blue","orange"]
+    colorF=[ "sienna","blue","orange"]
     colorM=["black","red"]
-    color_index=color1N
+    color_index=colorM
 
     for index, g in enumerate(gbc1):
            ax1.scatter(g[1].loc[:, "bio_std"], g[1].loc[:, "zhu_std"], marker="o", color=color_index[index], facecolor="none"
@@ -205,7 +205,7 @@ def main():
     #                    label=r'$3\sigma$', edgecolor='blue', linestyle=':')
 
     ax1.scatter(mu0, mu1, c='blue', s=15)
-    ax1.text(0.8, 0.8, r"$r^{2}=0.101$")
+    ax1.text(0.8, 0.8, r"$r^{2}=0.116$")
     # ax1.set_title('ICN')
     # ax1.set_xlabel("Average Biomass ",fontsize=20)
     ax1.set_ylabel("ICN",fontsize=17)
@@ -220,8 +220,7 @@ def main():
             ax2.scatter(g[1].loc[:, "bio_std"], g[1].loc[:, "zhu_std"], marker="o", color=color_index[index],facecolor="none"
                         , s=60)
             print(g[0])
-    # N1=["N<15","N>=15"]
-    # N1=["M=No","M=Yes"]
+
     N1=["F=0","F=Low","F=High"]
     ax2.legend(ncol=1, bbox_to_anchor=(1, 0.5), fontsize=13, labels=N1)
     # ax2.scatter(x2, y2, s=0.5, c="red")
@@ -233,7 +232,7 @@ def main():
 
     ax2.scatter(mu2, mu3, c='red', s=15)
 
-    ax2.text(0.7, 0.8, r"$r^{2}=0.494***$")
+    ax2.text(0.7, 0.8, r"$r^{2}=0.482***$")
     # ax2.set_title('TCN')
     ax2.set_xlabel("Average Biomass",fontsize=20)
     ax2.set_ylabel("TCN",fontsize=17)

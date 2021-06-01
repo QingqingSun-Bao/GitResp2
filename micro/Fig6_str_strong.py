@@ -174,7 +174,8 @@ def main():
         har.append(N)
     # print(np.mat(har).T)
     harvest = np.array(np.mat(har).T)
-    # print("harvest",harvest)
+    print("harvest",harvest)
+    pd.DataFrame(harvest).to_excel(path+"Support/harvest.xls")
 
     year = list(ind)
     N = ["0", "1", "2", "3", "5", "10", "15", "20", "50"]

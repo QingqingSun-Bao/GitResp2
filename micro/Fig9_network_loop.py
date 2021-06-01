@@ -157,7 +157,7 @@ def main():
                 # 结点分配不同的颜色
                 pos=nx.circular_layout(G)
                 #"yellow","violet","orange","cornflowerblue", "firebrick","lawngreen"
-                node_clor=["turquoise"]
+                node_clor=["darkturquoise"]
                 nx.draw_networkx_nodes(G, pos,node_color=node_clor,
                                        with_labels=True, node_size=500)
                 # 构建文本标签字典
@@ -189,13 +189,13 @@ def main():
                         # '大针茅'Stipa grandis, '糙隐子草'Cleistogenes squarrosa, '冰草'Agropyron cristatum,
                         # '洽草'Koeleria cristata, '细叶韭'Allium tenuissimum, '黄囊苔草'Carex korshinskyi
                         nx.draw(G, pos,node_color=node_clor,
-                                edge_color='red', with_labels=True, edgelist=edge_list1,width=1.5,
+                                edge_color='orange', with_labels=True, edgelist=edge_list1,width=1.5,
                                 font_size=10, node_size=3000)
                         edge_ring.extend(edge_list1)
                 print(edge_ring)
                 edge_chain=set(edge_list)-set(edge_ring)-set([('Koeleria\ncristata', 'Allium\ntenuissimum')])
                 nx.draw(G, pos,node_color=node_clor,
-                                edge_color='darkcyan', with_labels=True, edgelist=edge_chain,width=0.7,
+                                edge_color='springgreen', with_labels=True, edgelist=edge_chain,width=0.7,
                                 font_size=10, node_size=3000)
     plt.show()
 

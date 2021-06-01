@@ -186,7 +186,7 @@ def main():
                 edge_ring=[]
                 # node_color = ["limegreen", "r", "violet", "cyan", "orange", "yellow"]
                 # node_color = ["lawngreen","lawngreen","lawngreen","orange","lawngreen","lawngreen"]
-                node_color=["turquoise"]
+                node_color=["darkturquoise"]
                 for item in cyc_sys:
                     if len(item)>=3:
                         print(item)
@@ -195,7 +195,7 @@ def main():
                             print(item)
                             edge_list1 = get_cyc_edge(C_mat,item,Ass)
                             nx.draw(G, pos,node_color=node_color,
-                                    edge_color='red', with_labels=True, edgelist=edge_list1,width=1.5,
+                                    edge_color='orange', with_labels=True, edgelist=edge_list1,width=1.5,
                                     font_size=10, node_size=3000)
                             edge_ring.extend(edge_list1)
                         # if "Potentilla\nacaulis" not in item:
@@ -207,7 +207,7 @@ def main():
 
                 edge_chain=set(edge_list)-set(edge_ring)
                 nx.draw(G, pos,node_color=node_color,
-                                edge_color='darkcyan', with_labels=True, edgelist=edge_chain,width=0.7,
+                                edge_color='springgreen', with_labels=True, edgelist=edge_chain,width=0.7,
                                 font_size=10, node_size=3000)
     plt.show()
 

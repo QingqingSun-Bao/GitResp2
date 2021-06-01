@@ -3,6 +3,7 @@
 # @File:4.16_dic_GroupbyRank.py
 import pandas as pd
 from numpy import *
+import numpy as np
 
 
 def LoadDict(path):
@@ -21,7 +22,8 @@ def Savedict(path,datadict):
 
 def get_rank(lst):
     lst_rank=[]
-    rank=[0.85,0.8,0.75,0.7,0.65,0.6,0.55,0.5,0.45,0.4,0.35,0]
+    rank=[0.8,0.7,0.6,0.5,0.4,0.3,0.2]
+    #0.85,0.8,0.75,0.7,0.65,0.6,0.55,0.5,0.45,0.4,0.35,0
     for l in lst:
         for i in range(len(rank)):
            if l>rank[i]:
@@ -35,7 +37,7 @@ def get_groupbycompete(c_mat):
     n=np.shape(c_mat)[0]
     for i in range(n):
         row_mean.append(np.mean(c_mat[i,:]))
-    rank=get_rank(row_mean)
+    rank = get_rank(row_mean)
     return rank
 
 
@@ -45,7 +47,8 @@ if __name__ == "__main__":
     df_NODF = pd.read_excel(path + "Network/loop_NODF.xls")
     dic_zuhe = LoadDict(path + "Zuhe/Zuhe_20.txt")
     # 等级字典
-    key=["1","2","3","4","5","6","7","8","9","10","11","12"]
+    key=["1","2","3","4","5","6","7"]
+    #"1","2","3","4","5","6","7","8","9","10","11","12"
     dic_com = dict([(k,[]) for k in key])
     print(dic_com)
     """将所有的物种分等级整理"""
@@ -63,6 +66,18 @@ if __name__ == "__main__":
     print(dic_com)
     for key1 in dic_com.keys():
         print(len(dic_com[key1]))
-    Savedict(path+"Attribute/groupbyrank.txt",dic_com)
+    Savedict(path+"Attribute/groupbyrank_0.8-0.txt",dic_com)
+    # 47
+    # 108
+    # 82
+    # 58
+    # 73
+    # 95
+    # 141
+    # 153
+    # 162
+    # 118
+    # 79
+    # 54
 
 
